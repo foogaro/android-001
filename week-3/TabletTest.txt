@@ -1,0 +1,7 @@
+02-10 06:07:04.744      903-903/? I/Lab-Fragments﹕ Entered onActivityCreated()
+02-10 06:07:08.624      903-903/? I/Lab-Fragments﹕ Entered onItemSelected(0)
+02-10 06:07:08.624      903-903/? I/Lab-Fragments﹕ Entered updateFeedDisplay()
+02-10 06:07:10.973      903-903/? I/Lab-Fragments﹕ Entered onItemSelected(1)
+02-10 06:07:10.973      903-903/? I/Lab-Fragments﹕ Entered updateFeedDisplay()
+02-10 06:07:13.094      903-903/? I/Lab-Fragments﹕ Entered onItemSelected(2)
+02-10 06:07:13.094      903-903/? I/Lab-Fragments﹕ Entered updateFeedDisplay()

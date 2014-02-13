@@ -1,0 +1,2 @@
+02-04 10:58:22.968    2311-2311/? I/Lab-Intents﹕ Entered startImplicitActivation()
+02-04 10:58:22.968    2311-2311/? I/Lab-Intents﹕ Chooser Intent Action:android.intent.action.CHOOSER

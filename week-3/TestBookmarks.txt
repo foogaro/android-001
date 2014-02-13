@@ -1,0 +1,3 @@
+02-05 05:43:17.599    1357-1357/? I/Lab-Permissions﹕ Entered startBookMarksActivity()
+02-05 05:43:18.774    1357-1357/? I/Lab-Permissions﹕ Entered loadBookmarks()
+02-05 05:43:19.453    1357-1357/? I/Lab-Permissions﹕ Bookmarks loaded
