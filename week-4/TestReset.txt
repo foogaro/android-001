@@ -1,0 +1,6 @@
+02-13 07:56:37.092    1125-1125/? I/Lab-UserInterface﹕ Entered footerView.OnClickListener.onClick()
+02-13 07:56:40.774    1125-1125/? I/Lab-UserInterface﹕ Entered resetButton.OnClickListener.onClick()
+02-13 07:56:43.103    1125-1125/? I/Lab-UserInterface﹕ Entered submitButton.OnClickListener.onClick()
+02-13 07:56:43.723    1125-1125/? I/Lab-UserInterface﹕ Entered onActivityResult()
+02-13 07:56:45.828    1125-1125/? I/Lab-UserInterface﹕ Entered onCheckedChanged()
+02-13 07:56:46.829    1125-1125/? I/Lab-UserInterface﹕ Item 0: Title:t3,Priority:HIGH,Status:DONE,Date:2014-02-20 07:56:00
