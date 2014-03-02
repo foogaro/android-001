@@ -6,6 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import android.app.PendingIntent;
+import android.os.AsyncTask;
+import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,11 +26,10 @@ import android.util.Log;
 public class MainActivity extends Activity implements SelectionListener {
 
 	public static final String TWEET_FILENAME = "tweets.txt";
-	public static final String[] FRIENDS = { "taylorswift13", "msrebeccablack",
-			"ladygaga" };
+	public static final String[] FRIENDS = { "taylorswift13", "msrebeccablack", "ladygaga" };
 	public static final String DATA_REFRESHED_ACTION = "course.labs.notificationslab.DATA_REFRESHED";
-	
-	private static final int NUM_FRIENDS = 3;
+
+    private static final int NUM_FRIENDS = 3;
 	private static final String URL_LGAGA = "https://d396qusza40orc.cloudfront.net/android%2FLabs%2FUserNotifications%2Fladygaga.txt";
 	private static final String URL_RBLACK = "https://d396qusza40orc.cloudfront.net/android%2FLabs%2FUserNotifications%2Frebeccablack.txt";
 	private static final String URL_TSWIFT = "https://d396qusza40orc.cloudfront.net/android%2FLabs%2FUserNotifications%2Ftaylorswift.txt";
@@ -80,16 +82,19 @@ public class MainActivity extends Activity implements SelectionListener {
 
 		if (!mIsFresh) {
 
-			// TODO:
+			// FIXED:
 			// Show a Toast Notification to inform user that 
 			// the app is "Downloading Tweets from Network"
 			log ("Issuing Toast Message");
-
+            Toast toast = Toast.makeText(getApplicationContext(), "Downloading Tweets from Network", 2000);
+            Log.d(TAG, "Toast created, will show up soon...");
+            toast.show();
 
 			
-			// TODO:
+			// FIXED:
 			// Start new AsyncTask to download Tweets from network
-
+            AsyncTask<String, Void, String[]> downloaderTask = new DownloaderTask(this).execute(URL_TSWIFT,URL_RBLACK,URL_LGAGA);
+            Log.d(TAG, "DownloaderTask created: " + downloaderTask);
 
 
 			
@@ -101,11 +106,11 @@ public class MainActivity extends Activity implements SelectionListener {
 
 					log("BroadcastIntent received in MainActivity");
 
-					// TODO:				
+					// FIXED:
 					// Check to make sure this is an ordered broadcast
 					// Let sender know that the Intent was received
 					// by setting result code to RESULT_OK
-
+                    setResult(RESULT_OK, "RESULT_OK", null);
 
 				}
 			};
@@ -176,24 +181,25 @@ public class MainActivity extends Activity implements SelectionListener {
 	protected void onResume() {
 		super.onResume();
 
-		// TODO:
+		// FIXED:
 		// Register the BroadcastReceiver to receive a 
 		// DATA_REFRESHED_ACTION broadcast
-
-
+        IntentFilter intentFilter = new IntentFilter(DATA_REFRESHED_ACTION);
+        Log.d(TAG, "IntentFilter created: " + intentFilter);
+        registerReceiver(mRefreshReceiver, intentFilter);
+        Log.d(TAG, "BroadcastReceiver registered with IntentFilter...");
+        //PendingIntent.getBroadcast(this, RESULT_OK, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 		
 	}
 
 	@Override
 	protected void onPause() {
+        super.onPause();
 
-		// TODO:
+		// FIXED:
 		// Unregister the BroadcastReceiver
-
-
-		
-		
-		super.onPause();
+        try { unregisterReceiver(mRefreshReceiver); } catch (IllegalArgumentException e) { Log.e(TAG, e.getMessage()); }
+        Log.d(TAG, "BroadcastReceiver unregistered...");
 
 	}
 

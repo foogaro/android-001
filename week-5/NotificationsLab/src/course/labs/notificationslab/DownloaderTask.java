@@ -23,7 +23,7 @@ import android.widget.RemoteViews;
 
 public class DownloaderTask extends AsyncTask<String, Void, String[]> {
 
-	private static final int SIM_NETWORK_DELAY = 5000;
+	private static final int SIM_NETWORK_DELAY = 500;
 	private static final String TAG = "Lab-Notifications";
 	private final int MY_NOTIFICATION_ID = 11151990;
 	private String mFeeds[] = new String[3];
@@ -131,9 +131,9 @@ public class DownloaderTask extends AsyncTask<String, Void, String[]> {
 	private void notify(final boolean success) {
 		log("Entered notify()");
 
-		final Intent restartMainActivtyIntent = new Intent(mApplicationContext,
-				MainActivity.class);
-		restartMainActivtyIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		final Intent restartMainActivtyIntent = new Intent(mApplicationContext, MainActivity.class);
+//		restartMainActivtyIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		restartMainActivtyIntent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
 
 		if (success) {
 
@@ -163,15 +163,15 @@ public class DownloaderTask extends AsyncTask<String, Void, String[]> {
 
 						log("Entered result receiver's onReceive() method");
 
-						// TODO: Check whether the result code is RESULT_OK
+						// FIXED: Check whether the result code is RESULT_OK
+                        Log.d(TAG, "getResultCode: " + getResultCode());
+                        Log.d(TAG, "MainActivity.RESULT_OK: " + MainActivity.RESULT_OK);
+						if (getResultCode() != MainActivity.RESULT_OK) {
 
-						if (/*change this*/ true) {
-
-							// TODO:  If so, create a PendingIntent using the
+							// FIXED:  If so, create a PendingIntent using the
 							// restartMainActivityIntent and set its flags
 							// to FLAG_UPDATE_CURRENT
-							
-							final PendingIntent pendingIntent = null;
+							final PendingIntent pendingIntent = PendingIntent.getActivity(mApplicationContext, MainActivity.RESULT_OK, restartMainActivtyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 							
 
 
@@ -183,24 +183,33 @@ public class DownloaderTask extends AsyncTask<String, Void, String[]> {
 									mApplicationContext.getPackageName(),
 									R.layout.custom_notification);
 
-							// TODO: Set the notification View's text to
+							// FIXED: Set the notification View's text to
 							// reflect whether or the download completed
 							// successfully
-
+                            mContentView.setTextViewText(R.id.text, successMsg);
 
 							
-							// TODO: Use the Notification.Builder class to
+							// FIXED: Use the Notification.Builder class to
 							// create the Notification. You will have to set
 							// several pieces of information. You can use
 							// android.R.drawable.stat_sys_warning
 							// for the small icon. You should also setAutoCancel(true). 
 
-							Notification.Builder notificationBuilder = null;
+							Notification.Builder notificationBuilder = new Notification.Builder(mApplicationContext);
+                            notificationBuilder.setAutoCancel(true)
+                                .setContent(mContentView)
+                                .setContentTitle("Tweets downloaded")
+                                .setContentText(successMsg)
+                                .setContentIntent(pendingIntent)
+                                .setSmallIcon(android.R.drawable.stat_sys_warning)
+                                .setTicker("Tweets downloaded")
+                                .setWhen(System.currentTimeMillis())
+                                .setAutoCancel(true);
+                            Notification notification = notificationBuilder.build();
 
-							// TODO: Send the notification
-
-							
-							
+							// FIXED: Send the notification
+                            NotificationManager nm = (NotificationManager) mApplicationContext.getSystemService(Context.NOTIFICATION_SERVICE);
+							nm.notify(MY_NOTIFICATION_ID, notification);
 							log("Notification Area Notification sent");
 						}
 					}
