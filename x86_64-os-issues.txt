@@ -1,0 +1,8 @@
+My env:
+Fedora 20 MATE 64bit
+JDK 1.7.0_51
+
+If you have a 64bit host OS, you need some 32bit library.
+
+Those are ones I had to install in order to use the Android SDK, AVD and all tools:
+sudo yum install libstdc++ ncurses-libs.i686 zlib.i686
